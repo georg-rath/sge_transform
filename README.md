@@ -5,6 +5,7 @@ Database output is done via the Sequel library. PostgreSQL and MySQL adapters ar
 If you need other adapters you need to install them on your own.
 
 Data is pumped into the database as a single table with the following fields:
+
     qname hostname group owner jobname jobnumber account priority qsub_time start_time end_time failed exit_status
     ru_wallclock ru_utime ru_stime ru_maxrss ru_ixrss ru_ismrss ru_idrss ru_isrss ru_minflt ru_majflt ru_nswap
     ru_inblock ru_oublock ru_msgsnd ru_msgrcv ru_nsignals ru_nvcsw ru_nivcsw project department granted_pe slots
