@@ -76,7 +76,6 @@ module SgeTransform
       job = {}
       line.each { |key, value|
         if key == 'qsub_time' or key == 'start_time' or key == 'end_time' or key == 'ar_submission_time'
-          puts value
           job[key] = Time.at(value.to_i).utc.to_datetime
         else
           job[key] = value
