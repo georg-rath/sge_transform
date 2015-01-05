@@ -33,21 +33,21 @@ module SgeTransform
         Integer :ru_wallclock
         Float :ru_utime
         Float :ru_stime
-        Integer :ru_maxrss
-        Integer :ru_ixrss
-        Integer :ru_ismrss
-        Integer :ru_idrss
-        Integer :ru_isrss
-        Integer :ru_minflt
-        Integer :ru_majflt
-        Integer :ru_nswap
-        Integer :ru_inblock
-        Integer :ru_oublock
-        Integer :ru_msgsnd
-        Integer :ru_msgrcv
-        Integer :ru_nsignals
-        Integer :ru_nvcsw
-        Integer :ru_nivcsw
+        Float :ru_maxrss
+        Float :ru_ixrss
+        Float :ru_ismrss
+        Float :ru_idrss
+        Float :ru_isrss
+        Float :ru_minflt
+        Float :ru_majflt
+        Float :ru_nswap
+        Float :ru_inblock
+        Float :ru_oublock
+        Float :ru_msgsnd
+        Float :ru_msgrcv
+        Float :ru_nsignals
+        Float :ru_nvcsw
+        Float :ru_nivcsw
         Float :cpu
         Float :mem
         Float :io
