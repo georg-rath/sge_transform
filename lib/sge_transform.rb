@@ -20,7 +20,7 @@ module SgeTransform
         String :jobname
         String :jobnumber
         Integer :taskid
-        Integer :pe_taskid
+        String :pe_taskid
         String :account
         Integer :priority
         DateTime :qsub_time
