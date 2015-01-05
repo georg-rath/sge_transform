@@ -1,6 +1,7 @@
 require "sge_transform/version"
 require 'csv'
 require 'sequel'
+require 'date'
 
 module SgeTransform
   class DBMapper
@@ -74,7 +75,12 @@ module SgeTransform
     csv.each_with_index { |line, index|
       job = {}
       line.each { |key, value|
-        job[key] = value
+        if key == 'qsub_time' or key == 'start_time' or key == 'end_time' or key == 'ar_submission_time'
+          puts value
+          job[key] = Time.at(value.to_i).utc.to_datetime
+        else
+          job[key] = value
+        end
       }
       queue.push(job)
       if index % flush_count == 0
