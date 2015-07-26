@@ -7,15 +7,15 @@ options[:commit_count] = 10000
 opt_parser = OptionParser.new do |opts|
   opts.banner = "Usage: #{__FILE__} [options]"
 
-  opts.on("-aACCOUNTING_FILE", "--accounting_file=ACCOUNTING_FILE", "Path of the SGE accounting file") do |file|
+  opts.on("-a ACCOUNTING_FILE", "--accounting_file=ACCOUNTING_FILE", "Path of the SGE accounting file") do |file|
     options[:accounting_file] = file
   end
 
-  opts.on("-dDB", "--database=DB", "Connection string of the database (sequel format)") do |connection_string|
+  opts.on("-d DB", "--database=DB", "Connection string of the database (sequel format)") do |connection_string|
     options[:connection_string] = connection_string
   end
 
-  opts.on("-cCOMMIT_COUNT", "--commit_count=COMMIT_COUNT", "Number of inserts to do at once") do |count|
+  opts.on("-c COMMIT_COUNT", "--commit_count=COMMIT_COUNT", "Number of inserts to do at once") do |count|
     options[:commit_count] = count
   end
   opts.on_tail("-h", "--help", "Show this message") do
@@ -24,8 +24,19 @@ opt_parser = OptionParser.new do |opts|
   end
 end
 
-opt_parser.parse!(ARGV)
-raise OptionParser::MissingArgument if options[:accounting_file].nil?
-raise OptionParser::MissingArgument if options[:connection_string].nil?
+begin
+  opt_parser.parse!
+  mandatory = [:accounting_file, :connection_string]                                         # Enforce the presence of
+  missing = mandatory.select{ |param| options[param].nil? }        # the -t and -f switches
+  unless missing.empty?                                            #
+    puts "Missing options: #{missing.join(', ')}"                  #
+    puts opt_parser                                                  #
+    exit                                                           #
+  end                                                              #
+rescue OptionParser::InvalidOption, OptionParser::MissingArgument      #
+  puts $!.to_s                                                           # Friendly output when parsing fails
+  puts opt_parser                                                      #
+  exit                                                                   #
+end
 
 SgeTransform.transform(options[:accounting_file], options[:connection_string], options[:commit_count])
