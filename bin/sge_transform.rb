@@ -2,6 +2,8 @@
 require 'optparse'
 require 'sge_transform'
 
+$0 = 'sge_transform'
+
 options = {}
 options[:commit_count] = 10000
 opt_parser = OptionParser.new do |opts|
@@ -26,17 +28,19 @@ end
 
 begin
   opt_parser.parse!
-  mandatory = [:accounting_file, :connection_string]                                         # Enforce the presence of
-  missing = mandatory.select{ |param| options[param].nil? }        # the -t and -f switches
-  unless missing.empty?                                            #
-    puts "Missing options: #{missing.join(', ')}"                  #
-    puts opt_parser                                                  #
-    exit                                                           #
-  end                                                              #
-rescue OptionParser::InvalidOption, OptionParser::MissingArgument      #
-  puts $!.to_s                                                           # Friendly output when parsing fails
-  puts opt_parser                                                      #
-  exit                                                                   #
+  mandatory = [:accounting_file, :connection_string]
+  missing = mandatory.select{ |param| options[param].nil? }
+  unless missing.empty?
+    puts "Missing options: #{missing.join(', ')}"
+    puts opt_parser
+    exit
+  end
+rescue OptionParser::InvalidOption, OptionParser::MissingArgument
+  puts $!.to_s
+  puts opt_parser
+  exit
 end
 
-SgeTransform.transform(options[:accounting_file], options[:connection_string], options[:commit_count])
+#SgeTransform.transform(options[:accounting_file], options[:connection_string], options[:commit_count])
+transformer = SgeTransform::Transformer.new(options[:accounting_file], options[:connection_string], options[:commit_count])
+transformer.transform
