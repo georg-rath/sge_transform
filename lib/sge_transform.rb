@@ -66,6 +66,7 @@ module SgeTransform
         col_sep: ':',
         headers: headers,
         skip_blanks: true,
+        quote_char: "\x00",
     }
     csv = CSV.new(IO.read(accounting_file), options)
 
